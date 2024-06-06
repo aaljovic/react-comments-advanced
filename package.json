@@ -1,10 +1,10 @@
 {
   "name": "react-comments-section",
-  "version": "2.0.10",
+  "version": "2.1.0",
   "description": "React component library for a functioning comments section",
-  "author": "RiyaNegi",
+  "author": "aaljovic",
   "license": "MIT",
-  "repository": "RiyaNegi/react-comments-section",
+  "repository": "aaljovic/react-comments-section",
   "main": "dist/index.js",
   "style": "dist/styles.css",
   "module": "dist/index.modern.js",
