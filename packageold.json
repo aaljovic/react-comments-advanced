@@ -1,5 +1,5 @@
 {
-  "name": "react-comments-section",
+  "name": "react-comments-advanced",
   "version": "1.0.7",
   "description": "A react library for building comments section",
   "author": "RiyaNegi",
@@ -54,9 +54,7 @@
     "react-responsive-modal": "^6.2.0",
     "@types/lodash": "^4.14.182"
   },
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "dependencies": {
     "@types/jest": "^27.4.1",
     "@types/node": "^17.0.25",

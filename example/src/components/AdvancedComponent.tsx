@@ -1,21 +1,18 @@
 import React, { useEffect } from 'react'
-import { CommentSection } from 'react-comments-section'
-import 'react-comments-section/dist/index.css'
+import { CommentSection } from 'react-comments-advanced'
+import 'react-comments-advanced/dist/index.css'
 import { useState } from 'react'
 import moment from 'moment'
 
 const AdvancedComponent = () => {
-  const [updatedDate, setUpdatedDate] = useState("");
-  const [data] = useState([]);
+  const [updatedDate, setUpdatedDate] = useState('')
+  const [data] = useState([])
 
-  useEffect(() =>
-  {
+  useEffect(() => {
     setInterval(function () {
-      setUpdatedDate(moment().format("YYYY-MM-DD, HH:mm:ss"));
-    }, 1000);
-
-    
-  }, [updatedDate]);
+      setUpdatedDate(moment().format('YYYY-MM-DD, HH:mm:ss'))
+    }, 1000)
+  }, [updatedDate])
 
   return (
     <div style={{ width: '100%' }}>
@@ -23,7 +20,7 @@ const AdvancedComponent = () => {
         style={{ color: 'black', cursor: 'pointer' }}
         target='_blank'
         rel='noopener noreferrer'
-        href='https://github.com/RiyaNegi/react-comments-section/blob/main/example/src/components/AdvancedComponent.tsx'
+        href='https://github.com/RiyaNegi/react-comments-advanced/blob/main/example/src/components/AdvancedComponent.tsx'
       >
         <span className='title'>Advanced Input Component</span>
       </a>
@@ -35,7 +32,7 @@ const AdvancedComponent = () => {
           currentUserProfile:
             'https://www.linkedin.com/in/riya-negi-8879631a9/',
           currentUserFullName: 'Riya Negi',
-          currentUserCreatedAt: moment().format("YYYY-MM-DD HH:mm:ss"),
+          currentUserCreatedAt: moment().format('YYYY-MM-DD HH:mm:ss'),
           currentUserUpdatedAt: updatedDate
         }}
         hrStyle={{ border: '0.5px solid #ff0072' }}

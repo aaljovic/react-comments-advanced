@@ -1,6 +1,6 @@
 import React from 'react'
-import { CommentSection } from 'react-comments-section'
-import 'react-comments-section/dist/index.css'
+import { CommentSection } from 'react-comments-advanced'
+import 'react-comments-advanced/dist/index.css'
 import { useState } from 'react'
 
 const CustomComponent = () => {
@@ -9,8 +9,8 @@ const CustomComponent = () => {
       userId: '01a',
       comId: '012',
       fullName: 'Riya Negi',
-      createdAt: "2023-04-23",
-      updatedAt: "",
+      createdAt: '2023-04-23',
+      updatedAt: '',
       avatarUrl: 'https://ui-avatars.com/api/name=Riya&background=random',
       userProfile: 'https://www.linkedin.com/in/riya-negi-8879631a9/',
       text: 'Hey, Loved your blog! ',
@@ -20,16 +20,16 @@ const CustomComponent = () => {
           comId: '013',
           userProfile: 'https://www.linkedin.com/in/riya-negi-8879631a9/',
           fullName: 'Adam Scott',
-          createdAt: "2023-04-23",
-          updatedAt: "",
+          createdAt: '2023-04-23',
+          updatedAt: '',
           avatarUrl: 'https://ui-avatars.com/api/name=Adam&background=random',
           text: 'Thanks! It took me 1 month to finish this project but I am glad it helped out someone!🥰'
         },
         {
           userId: '01a',
           comId: '014',
-          createdAt: "2023-04-23",
-          updatedAt: "",
+          createdAt: '2023-04-23',
+          updatedAt: '',
           userProfile: 'https://www.linkedin.com/in/riya-negi-8879631a9/',
           fullName: 'Riya Negi',
           avatarUrl: 'https://ui-avatars.com/api/name=Riya&background=random',
@@ -41,8 +41,8 @@ const CustomComponent = () => {
       userId: '02b',
       comId: '017',
       fullName: 'Lily',
-      createdAt: "2023-04-23",
-      updatedAt: "",
+      createdAt: '2023-04-23',
+      updatedAt: '',
       userProfile: 'https://www.linkedin.com/in/riya-negi-8879631a9/',
       text: 'I have a doubt about the 4th point🤔',
       avatarUrl: 'https://ui-avatars.com/api/name=Lily&background=random',
@@ -59,7 +59,7 @@ const CustomComponent = () => {
         style={{ color: 'black', cursor: 'pointer' }}
         target='_blank'
         rel='noopener noreferrer'
-        href='https://github.com/RiyaNegi/react-comments-section/blob/main/example/src/components/CustomComponent.tsx'
+        href='https://github.com/RiyaNegi/react-comments-advanced/blob/main/example/src/components/CustomComponent.tsx'
       >
         <span className='title'>Custom Component</span>
       </a>
@@ -71,8 +71,8 @@ const CustomComponent = () => {
           currentUserProfile:
             'https://www.linkedin.com/in/riya-negi-8879631a9/',
           currentUserFullName: 'Riya Negi',
-          currentUserCreatedAt: "2023-04-23",
-          currentUserUpdatedAt: "",
+          currentUserCreatedAt: '2023-04-23',
+          currentUserUpdatedAt: ''
         }}
         hrStyle={{ border: '0.5px solid #ff0072' }}
         titleStyle={{ color: '#f2f2f2' }}
