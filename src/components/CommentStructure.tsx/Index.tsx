@@ -1,159 +1,192 @@
-import './InputField.scss'
-import { useContext, useEffect, useState } from 'react'
+import './CommentStructure.scss'
+import { useContext } from 'react'
 import { GlobalContext } from '../../context/Provider'
+import InputField from '../InputField/Index'
+import { Menu, MenuItem } from '@szhsin/react-menu'
+import '@szhsin/react-menu/dist/core.css'
+import DeleteModal from './DeleteModal'
 import React from 'react'
-const { v4: uuidv4 } = require('uuid')
-import RegularInput from './RegularInput'
-import AdvancedInput from './AdvancedInput'
-import moment from 'moment'
+import moment from 'moment';
 
-interface InputFieldProps {
-  formStyle?: object
-  comId?: string
-  fillerText?: string
+interface CommentStructureProps {
+  info: {
+    userId: string
+    comId: string
+    fullName: string
+    avatarUrl: string
+    text: string
+    createdAt: string
+    updatedAt: string
+    userProfile?: string
+    replies?: Array<object> | undefined
+  }
+  editMode: boolean
   parentId?: string
-  mode?: string
-  customImg?: string
-  inputStyle?: object
-  cancelBtnStyle?: object
-  submitBtnStyle?: object
-  imgStyle?: object
-  imgDiv?: object
+  replyMode: boolean
+  logIn: {
+    loginLink: string
+    signupLink: string
+  }
 }
 
-const InputField = ({
-  formStyle,
-  comId,
-  fillerText,
+const CommentStructure = ({
+  info,
+  editMode,
   parentId,
-  mode,
-  customImg,
-  inputStyle,
-  cancelBtnStyle,
-  submitBtnStyle,
-  imgStyle,
-  imgDiv
-}: InputFieldProps) => {
-  const [text, setText] = useState('')
-
-  useEffect(() => {
-    if (fillerText) {
-      setText(fillerText)
-    }
-  }, [fillerText])
-
+  replyMode
+}: CommentStructureProps) => {
   const globalStore: any = useContext(GlobalContext)
-
-  const editMode = async (advText?: string) => {
-    const textToSend = advText ? advText : text
-
+  const currentUser = globalStore.currentUserData
+  const optionsMenu = () => {
     return (
-      await globalStore.onEdit(textToSend, comId, parentId),
-      globalStore.onEditAction &&
-        (await globalStore.onEditAction({
-          userId: globalStore.currentUserData.currentUserId,
-          comId: comId,
-          avatarUrl: globalStore.currentUserData.currentUserImg,
-          userProfile: globalStore.currentUserData.currentUserProfile
-            ? globalStore.currentUserData.currentUserProfile
-            : null,
-          createdAt: moment(globalStore.currentUserData.currentUserCreatedAt).isValid() ? globalStore.currentUserData.currentUserCreatedAt : moment().format("YYYY-MM-DD HH:mm:ss"),
-          updatedAt: globalStore.currentUserData.currentUserUpdatedAt,
-          fullName: globalStore.currentUserData.currentUserFullName,
-          text: textToSend,
-          parentOfEditedCommentId: parentId
-        }))
+      <div className='userActions'>
+        {info.userId === currentUser.currentUserId && (
+          <Menu
+            menuButton={
+              <button className='actionsBtn'>
+                {' '}
+                <div className='optionIcon' />
+              </button>
+            }
+          >
+            <MenuItem
+              onClick={() => globalStore.handleAction(info.comId, true)}
+            >
+              edit
+            </MenuItem>
+            <MenuItem>
+              <DeleteModal comId={info.comId} parentId={parentId} />
+            </MenuItem>
+          </Menu>
+        )}
+      </div>
     )
   }
 
-  const replyMode = async (replyUuid: string, advText?: string) => {
-    const textToSend = advText ? advText : text
-
+  const userInfo = () => {
     return (
-      await globalStore.onReply(textToSend, comId, parentId, replyUuid),
-      globalStore.onReplyAction &&
-        (await globalStore.onReplyAction({
-          userId: globalStore.currentUserData.currentUserId,
-          repliedToCommentId: comId,
-          avatarUrl: globalStore.currentUserData.currentUserImg,
-          userProfile: globalStore.currentUserData.currentUserProfile
-            ? globalStore.currentUserData.currentUserProfile
-            : null,
-          createdAt: moment(globalStore.currentUserData.currentUserCreatedAt).isValid() ? globalStore.currentUserData.currentUserCreatedAt : moment().format("YYYY-MM-DD HH:mm:ss"),
-          updatedAt: globalStore.currentUserData.currentUserUpdatedAt,
-          fullName: globalStore.currentUserData.currentUserFullName,
-          text: textToSend,
-          parentOfRepliedCommentId: parentId,
-          comId: replyUuid
-        }))
-    )
-  }
-  const submitMode = async (createUuid: string, advText?: string) => {
-    const textToSend = advText ? advText : text
-
-    return (
-      await globalStore.onSubmit(textToSend, createUuid),
-      globalStore.onSubmitAction &&
-        (await globalStore.onSubmitAction({
-          userId: globalStore.currentUserData.currentUserId,
-          comId: createUuid,
-          avatarUrl: globalStore.currentUserData.currentUserImg,
-          userProfile: globalStore.currentUserData.currentUserProfile
-            ? globalStore.currentUserData.currentUserProfile
-            : null,
-          createdAt: moment(globalStore.currentUserData.currentUserCreatedAt).isValid() ? globalStore.currentUserData.currentUserCreatedAt : moment().format("YYYY-MM-DD HH:mm:ss"),
-          updatedAt: globalStore.currentUserData.currentUserUpdatedAt,
-          fullName: globalStore.currentUserData.currentUserFullName,
-          text: textToSend,
-          replies: []
-        }))
+      <div className='commentsTwo'>
+        <a className='userLink' target='_blank' href={info.userProfile}>
+          <div>
+            <img
+              src={info.avatarUrl}
+              alt='userIcon'
+              className='imgdefault'
+              style={
+                globalStore.imgStyle ||
+                (!globalStore.replyTop
+                  ? { position: 'relative', top: 7 }
+                  : null)
+              }
+            />
+          </div>
+          <div className='fullName'>
+            {info.fullName} &#09; 
+            <span className = "date">
+              {(info?.updatedAt && moment(info?.updatedAt)?.isValid()) 
+              ? moment(info?.updatedAt, "YYYY-MM-DD HH:mm:ss").fromNow() + ' (edited)' 
+              : (info?.createdAt && moment(info?.createdAt)?.isValid())
+              && moment(info?.createdAt, "YYYY-MM-DD HH:mm:ss").fromNow()}
+            </span>
+          </div>
+        </a>
+      </div>
     )
   }
 
-  const handleSubmit = async (event: any, advText?: string) => {
-    event.preventDefault()
-    const createUuid = uuidv4()
-    const replyUuid = uuidv4()
-    mode === 'editMode'
-      ? editMode(advText)
-      : mode === 'replyMode'
-      ? replyMode(replyUuid, advText)
-      : submitMode(createUuid, advText)
-    setText('')
+  const replyTopSection = () => {
+    return (
+      <div className='halfDiv'>
+        <div className='userInfo'>
+          <div>{info.text}</div>
+          {userInfo()}
+        </div>
+        {currentUser && optionsMenu()}
+      </div>
+    )
+  }
+
+  const replyBottomSection = () => {
+    return (
+      <div className='halfDiv'>
+        <div className='userInfo'>
+          {userInfo()}
+          {globalStore.advancedInput ? (
+            <div
+              className='infoStyle'
+              dangerouslySetInnerHTML={{
+                __html: info.text
+              }}
+            />
+          ) : (
+            <div className='infoStyle'>{info.text}</div>
+          )}
+          <div style={{ marginLeft: 32 }}>
+            {' '}
+            {currentUser && (
+              <div>
+                <button
+                  className='replyBtn'
+                  onClick={() => globalStore.handleAction(info.comId, false)}
+                >
+                  <div className='replyIcon' />
+                  <span style={{ marginLeft: 17 }}>Reply</span>
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+        {currentUser && optionsMenu()}
+      </div>
+    )
+  }
+
+  const actionModeSection = (mode: string) => {
+    if (mode === 'reply') {
+      return (
+        <div className='replysection'>
+          {globalStore.replyTop ? replyTopSection() : replyBottomSection()}
+          <InputField
+            formStyle={{
+              backgroundColor: 'transparent',
+              padding: '20px 0px',
+              marginLeft: '-15px'
+            }}
+            comId={info.comId}
+            fillerText={''}
+            mode={'replyMode'}
+            parentId={parentId}
+          />
+        </div>
+      )
+    } else {
+      return (
+        <InputField
+          formStyle={{
+            backgroundColor: 'transparent',
+            padding: '20px 0px',
+            marginLeft: '-15px'
+          }}
+          comId={info.comId}
+          fillerText={info.text}
+          mode={'editMode'}
+          parentId={parentId}
+        />
+      )
+    }
   }
 
   return (
     <div>
-      {globalStore.advancedInput ? (
-        <AdvancedInput
-          handleSubmit={handleSubmit}
-          text={mode === 'editMode' ? text : ''}
-          formStyle={formStyle}
-          mode={mode}
-          cancelBtnStyle={cancelBtnStyle}
-          submitBtnStyle={submitBtnStyle}
-          comId={comId}
-          imgDiv={imgDiv}
-          imgStyle={imgStyle}
-          customImg={customImg}
-        />
-      ) : (
-        <RegularInput
-          formStyle={formStyle}
-          imgDiv={imgDiv}
-          imgStyle={imgStyle}
-          customImg={customImg}
-          mode={mode}
-          inputStyle={inputStyle}
-          cancelBtnStyle={cancelBtnStyle}
-          comId={comId}
-          submitBtnStyle={submitBtnStyle}
-          handleSubmit={handleSubmit}
-          text={text}
-          setText={setText}
-        />
-      )}
+      {editMode
+        ? actionModeSection('edit')
+        : replyMode
+        ? actionModeSection('reply')
+        : globalStore.replyTop
+        ? replyTopSection()
+        : replyBottomSection()}
     </div>
   )
 }
-export default InputField
+
+export default CommentStructure
