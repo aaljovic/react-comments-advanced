@@ -77,6 +77,7 @@ const CommentSection = ({
               <div key={i.comId}>
                 <CommentStructure
                   info={i}
+                  displayDeleteModal={false}
                   editMode={
                     _.indexOf(globalStore.editArr, i.comId) === -1
                       ? false
@@ -96,6 +97,7 @@ const CommentSection = ({
                       <div className='replySection' key={j.comId}>
                         <CommentStructure
                           info={j}
+                          displayDeleteModal={false}
                           parentId={i.comId}
                           editMode={
                             _.indexOf(globalStore.editArr, j.comId) === -1

@@ -6,7 +6,7 @@ import { Menu, MenuItem } from '@szhsin/react-menu'
 import '@szhsin/react-menu/dist/core.css'
 import DeleteModal from './DeleteModal'
 import React from 'react'
-import moment from 'moment';
+import moment from 'moment'
 
 interface CommentStructureProps {
   info: {
@@ -21,6 +21,7 @@ interface CommentStructureProps {
     replies?: Array<object> | undefined
   }
   editMode: boolean
+  displayDeleteModal: boolean
   parentId?: string
   replyMode: boolean
   logIn: {
@@ -32,10 +33,12 @@ interface CommentStructureProps {
 const CommentStructure = ({
   info,
   editMode,
+  displayDeleteModal,
   parentId,
   replyMode
 }: CommentStructureProps) => {
   const globalStore: any = useContext(GlobalContext)
+
   const currentUser = globalStore.currentUserData
   const optionsMenu = () => {
     return (
@@ -52,11 +55,24 @@ const CommentStructure = ({
             <MenuItem
               onClick={() => globalStore.handleAction(info.comId, true)}
             >
-              edit
+              Edit
             </MenuItem>
-            <MenuItem>
-              <DeleteModal comId={info.comId} parentId={parentId} />
-            </MenuItem>
+            {displayDeleteModal ? (
+              <MenuItem>
+                <DeleteModal comId={info.comId} parentId={parentId} />
+              </MenuItem>
+            ) : (
+              <MenuItem
+                onClick={() => {
+                  globalStore.onDeleteAction({
+                    comIdToDelete: info.comId,
+                    parentOfDeleteId: parentId
+                  })
+                }}
+              >
+                Delete
+              </MenuItem>
+            )}
           </Menu>
         )}
       </div>
@@ -81,12 +97,14 @@ const CommentStructure = ({
             />
           </div>
           <div className='fullName'>
-            {info.fullName} &#09; 
-            <span className = "date">
-              {(info?.updatedAt && moment(info?.updatedAt)?.isValid()) 
-              ? moment(info?.updatedAt, "YYYY-MM-DD HH:mm:ss").fromNow() + ' (edited)' 
-              : (info?.createdAt && moment(info?.createdAt)?.isValid())
-              && moment(info?.createdAt, "YYYY-MM-DD HH:mm:ss").fromNow()}
+            {info.fullName} &#09;
+            <span className='date'>
+              {info?.updatedAt && moment(info?.updatedAt)?.isValid()
+                ? moment(info?.updatedAt, 'YYYY-MM-DD HH:mm:ss').fromNow() +
+                  ' (edited)'
+                : info?.createdAt &&
+                  moment(info?.createdAt)?.isValid() &&
+                  moment(info?.createdAt, 'YYYY-MM-DD HH:mm:ss').fromNow()}
             </span>
           </div>
         </a>
