@@ -10,7 +10,7 @@ import NoComments from './NoComments'
 
 interface CommentSectionProps {
   overlayStyle?: object
-  logIn: {
+  logIn?: {
     loginLink: string
     signupLink: string
   }
@@ -27,12 +27,15 @@ const CommentSection = ({
   customNoComment
 }: CommentSectionProps) => {
   const loginMode = () => {
-    return (
-      <LoginSection
-        loginLink={logIn!.loginLink}
-        signUpLink={logIn!.signupLink}
-      />
-    )
+    if (logIn) {
+      return (
+        <LoginSection
+          loginLink={logIn.loginLink}
+          signUpLink={logIn.signupLink}
+        />
+      )
+    }
+    return null
   }
   const globalStore: any = useContext(GlobalContext)
 
@@ -54,7 +57,7 @@ const CommentSection = ({
         </span>
         <hr className='hr-style' style={hrStyle} />
       </div>
-      {globalStore.currentUserData === null ? (
+      {globalStore.currentUserData === null && logIn ? (
         loginMode()
       ) : (
         <InputField formStyle={{ margin: '10px 0px' }} imgDiv={{ margin: 0 }} />
