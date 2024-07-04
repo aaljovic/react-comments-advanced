@@ -24,7 +24,7 @@ interface CommentStructureProps {
   displayDeleteModal: boolean
   parentId?: string
   replyMode: boolean
-  logIn: {
+  logIn?: {
     loginLink: string
     signupLink: string
   }

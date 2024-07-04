@@ -12,7 +12,7 @@ interface CommentSectionProps {
     currentUserCreatedAt: string
     currentUserUpdatedAt: string
   } | null
-  logIn: {
+  logIn?: {
     loginLink: string
     signupLink: string
   }
