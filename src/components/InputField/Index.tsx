@@ -2,7 +2,7 @@ import './InputField.scss'
 import { useContext, useEffect, useState } from 'react'
 import { GlobalContext } from '../../context/Provider'
 import React from 'react'
-const { v4: uuidv4 } = require('uuid')
+import { v4 as uuidv4 } from 'uuid'
 import RegularInput from './RegularInput'
 import AdvancedInput from './AdvancedInput'
 import moment from 'moment'
@@ -57,7 +57,11 @@ const InputField = ({
           userProfile: globalStore.currentUserData.currentUserProfile
             ? globalStore.currentUserData.currentUserProfile
             : null,
-          createdAt: moment(globalStore.currentUserData.currentUserCreatedAt).isValid() ? globalStore.currentUserData.currentUserCreatedAt : moment().format("YYYY-MM-DD HH:mm:ss"),
+          createdAt: moment(
+            globalStore.currentUserData.currentUserCreatedAt
+          ).isValid()
+            ? globalStore.currentUserData.currentUserCreatedAt
+            : moment().format('YYYY-MM-DD HH:mm:ss'),
           updatedAt: globalStore.currentUserData.currentUserUpdatedAt,
           fullName: globalStore.currentUserData.currentUserFullName,
           text: textToSend,
@@ -79,7 +83,11 @@ const InputField = ({
           userProfile: globalStore.currentUserData.currentUserProfile
             ? globalStore.currentUserData.currentUserProfile
             : null,
-          createdAt: moment(globalStore.currentUserData.currentUserCreatedAt).isValid() ? globalStore.currentUserData.currentUserCreatedAt : moment().format("YYYY-MM-DD HH:mm:ss"),
+          createdAt: moment(
+            globalStore.currentUserData.currentUserCreatedAt
+          ).isValid()
+            ? globalStore.currentUserData.currentUserCreatedAt
+            : moment().format('YYYY-MM-DD HH:mm:ss'),
           updatedAt: globalStore.currentUserData.currentUserUpdatedAt,
           fullName: globalStore.currentUserData.currentUserFullName,
           text: textToSend,
@@ -101,7 +109,11 @@ const InputField = ({
           userProfile: globalStore.currentUserData.currentUserProfile
             ? globalStore.currentUserData.currentUserProfile
             : null,
-          createdAt: moment(globalStore.currentUserData.currentUserCreatedAt).isValid() ? globalStore.currentUserData.currentUserCreatedAt : moment().format("YYYY-MM-DD HH:mm:ss"),
+          createdAt: moment(
+            globalStore.currentUserData.currentUserCreatedAt
+          ).isValid()
+            ? globalStore.currentUserData.currentUserCreatedAt
+            : moment().format('YYYY-MM-DD HH:mm:ss'),
           updatedAt: globalStore.currentUserData.currentUserUpdatedAt,
           fullName: globalStore.currentUserData.currentUserFullName,
           text: textToSend,
